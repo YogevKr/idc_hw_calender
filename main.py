@@ -1,6 +1,6 @@
 from addEvent import add_event
-from export_from_calendar_view import get_new_event_list
-from export_from_calendar_view import filter_backup
+from parse_htm import get_new_event_list
+from parse_htm import filter_backup
 import urllib
 import urllib2
 import pytz
