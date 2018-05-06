@@ -32,7 +32,7 @@ def main():
                    datetime.fromtimestamp(int(event[3]), tz).strftime('%d.%m.%Y %H:%M')+ '\n\n' + event[4]
 
         url = 'https://api.telegram.org/{0}/sendMessage' \
-              '?chat_id={1}&text={2}'.format(Config.TELEGRAM_TOKEN, Config.GOOGLE_CALENDER_ID, urllib.quote_plus(text))
+              '?chat_id={1}&text={2}'.format(Config.TELEGRAM_TOKEN, Config.TELEGRAM_CHAT_ID, urllib.quote_plus(text))
 
         contents = urllib2.urlopen(url).read()
 

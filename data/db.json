@@ -1,3 +1,7 @@
 {"events":
-{"ID": {"ex_number": "...", "course": "...", "link": "...", "end_time": "..."},
-  "ID1": {"ex_number": "...", "course": "...", "link": "...", "end_time": "..."}}}
+{"63665": {"ex_number": "3", "course": "Machine Learning from Data", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=63665", "end_time": "1525640100"},
+  "65090": {"ex_number": "3", "course": "Operating Systems", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=65090", "end_time": "1525985700"},
+  "66534": {"ex_number": "7", "course": "Fundamentals Of Finance", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=66534", "end_time": "1526196600"},
+  "66414": {"ex_number": "2", "course": "Information Retrieval and Web Search", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=66414", "end_time": "1526590500"},
+  "66132": {"ex_number": "4", "course": "Machine Learning from Data", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=66132", "end_time": "1526504100"},
+  "65003": {"ex_number": "3", "course": "Functional and Logic Programming", "link": "http://moodle.idc.ac.il/2018/mod/assign/view.php?id=65003", "end_time": "1525726500"}}}
