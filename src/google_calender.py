@@ -54,11 +54,18 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def add_event(summary, description, start, end, event_id):
 
+def get_service():
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
+
+    return service
+
+
+def add_event(summary, description, start, end, event_id):
+
+    service = get_service()
 
     event = {
         'summary': summary,
@@ -82,8 +89,26 @@ def add_event(summary, description, start, end, event_id):
 
     event = service.events().insert(calendarId='{0}@group.calendar.google.com'.format(Config.GOOGLE_CALENDER_ID), body=event).execute()
 
-    print
-    'Event created: %s' % (event.get('htmlLink'))
+
+def update_event(event):
+
+    service = get_service()
+
+    event = service.events().get(calendarId=Config.GOOGLE_CALENDER_ID, eventId=event.id).execute()
+
+    ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
+
+    event['start'] = {
+            'dateTime': ex_time_iso_format,
+            'timeZone': 'Asia/Jerusalem',
+                }
+
+    event['end'] = {
+            'dateTime': ex_time_iso_format,
+            'timeZone': 'Asia/Jerusalem',
+                }
+
+    updated_event = service.events().update(calendarId=Config.GOOGLE_CALENDER_ID, eventId=event['id'], body=event).execute()
 
 
 def add_event_from_event_object(event):

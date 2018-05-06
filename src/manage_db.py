@@ -43,3 +43,20 @@ def dump_events_to_db(new_events_dic):
 
     with open('data/db.json', 'w') as db:
         json.dump(data, db)
+
+
+def update_event(event):
+    current_db_events = load_events_from_db()
+
+    current_db_events[event.id] = event
+
+    data = parse_events_obj_to_json_format(current_db_events)
+
+    with open('data/db.json', 'w') as db:
+        json.dump(data, db)
+
+
+def update_events(events):
+
+    for key, value in events.iteritems():
+        update_event(value)
