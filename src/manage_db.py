@@ -22,19 +22,24 @@ def load_events_from_db():
     return event_dic
 
 
-def dump_events_to_db(new_events_dic):
+def parse_events_obj_to_json_format(events):
     data = {"events": {}}
+
+    for key, value in events.iteritems():
+        data["events"][key] = {"course": value.course, "ex_number": value.ex_number,
+                               "end_time": value.end_time, "link": value.link}
+    return data
+
+
+def dump_events_to_db(new_events_dic):
 
     current_db_events = load_events_from_db()
 
     # Add the new event obj
     for key, value in new_events_dic.iteritems():
-        [key] = value
+        current_db_events[key] = value
 
-    # Parse obj to json format
-    for key, value in current_db_events.iteritems():
-        data["events"][key] = {"course": value.course, "ex_number": value.ex_number,
-                               "end_time": value.end_time, "link": value.link}
+    data = parse_events_obj_to_json_format(current_db_events)
 
     with open('data/db.json', 'w') as db:
         json.dump(data, db)
