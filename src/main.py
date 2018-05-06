@@ -1,4 +1,4 @@
-from addEvent import add_event
+from google_calender import add_event
 from parse_htm import get_new_event_list
 from parse_htm import filter_backup
 import urllib
@@ -11,9 +11,6 @@ tz = pytz.timezone('Asia/Jerusalem')
 
 
 def main():
-
-    telegram_token = config["DEFAULT"]["TELEGRAM"]["TOKEN"]
-    telegram_chat_id = config["DEFAULT"]["TELEGRAM"]["CHAT_ID"]
 
     print '-----Start-----\n' +  datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\n'
     eventlist = get_new_event_list()
