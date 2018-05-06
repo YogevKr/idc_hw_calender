@@ -70,7 +70,6 @@ def add_event(summary, description, start, end, event_id):
     event = {
         'summary': summary,
         'description': description,
-        'eventId': event_id,
         'start': {
             'dateTime': start,
             'timeZone': 'Asia/Jerusalem',
@@ -89,26 +88,33 @@ def add_event(summary, description, start, end, event_id):
 
     event = service.events().insert(calendarId='{0}@group.calendar.google.com'.format(Config.GOOGLE_CALENDER_ID), body=event).execute()
 
+    return event.get('id')
 
-def update_event(event):
+def update_event(event_obj):
 
     service = get_service()
 
-    event = service.events().get(calendarId=Config.GOOGLE_CALENDER_ID, eventId=event.id).execute()
+    # try:
+    event = service.events().get(calendarId='{0}@group.calendar.google.com'
+                                 .format(Config.GOOGLE_CALENDER_ID), eventId=event_obj.google_id.encode("utf-8")).execute()
 
-    ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
+    ex_time_iso_format = datetime.fromtimestamp(int(event_obj.end_time), tz).isoformat()
 
     event['start'] = {
-            'dateTime': ex_time_iso_format,
-            'timeZone': 'Asia/Jerusalem',
-                }
+        'dateTime': ex_time_iso_format,
+        'timeZone': 'Asia/Jerusalem',
+    }
 
     event['end'] = {
-            'dateTime': ex_time_iso_format,
-            'timeZone': 'Asia/Jerusalem',
-                }
+        'dateTime': ex_time_iso_format,
+        'timeZone': 'Asia/Jerusalem',
+    }
 
-    updated_event = service.events().update(calendarId=Config.GOOGLE_CALENDER_ID, eventId=event['id'], body=event).execute()
+    updated_event = service.events().update(calendarId='{0}@group.calendar.google.com'.format(Config.GOOGLE_CALENDER_ID), eventId=event['id'],
+                                            body=event).execute()
+    # except:
+    #     return
+
 
 
 def add_event_from_event_object(event):
@@ -116,9 +122,16 @@ def add_event_from_event_object(event):
     title = 'Hw {0} - {1}'.format(event.ex_number, event.course)
     ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
 
-    add_event(title, event.link, ex_time_iso_format, ex_time_iso_format, event.id)
+    google_id = add_event(title, event.link, ex_time_iso_format, ex_time_iso_format, event.id)
+
+    event.google_id = google_id
 
 
 def add_events_to_calender(events):
     for key, value in events.iteritems():
         add_event_from_event_object(value)
+
+
+def update_events(events):
+    for key, value in events.iteritems():
+        update_event(value)

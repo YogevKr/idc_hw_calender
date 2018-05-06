@@ -20,6 +20,7 @@ def get_non_update_events(db, events):
 
         if key in db:
             if db[key] == value:
+                value.google_id = db[key].google_id
                 non_update_events[key] = value
 
     return non_update_events

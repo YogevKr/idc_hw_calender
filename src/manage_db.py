@@ -14,8 +14,9 @@ def load_events_from_db():
         ex_number = value["ex_number"]
         end_time = value["end_time"]
         link = value["link"]
+        google_id = value["google_id"]
 
-        ev = event.Event(key, course, ex_number, end_time, link)
+        ev = event.Event(key, course, ex_number, end_time, link, google_id)
 
         event_dic[key] = ev
 
@@ -27,7 +28,7 @@ def parse_events_obj_to_json_format(events):
 
     for key, value in events.iteritems():
         data["events"][key] = {"course": value.course, "ex_number": value.ex_number,
-                               "end_time": value.end_time, "link": value.link}
+                               "end_time": value.end_time, "link": value.link, "google_id": value.google_id}
     return data
 
 
@@ -57,6 +58,5 @@ def update_event(event):
 
 
 def update_events(events):
-
     for key, value in events.iteritems():
         update_event(value)
