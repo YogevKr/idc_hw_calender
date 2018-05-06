@@ -2,7 +2,7 @@ import urlparse
 import re
 import itertools
 import export_htm_robobrowser
-
+import event
 
 def parse_event_page(soup):
 
@@ -37,47 +37,10 @@ def parse_event_page(soup):
 
     # for id, course, num, exTime, link in itertools.izip(exIdlist, exCourseList, exNumList, exTimeList, exLinklist):
     #     print id + ' HW ' + num + ' - ' + course + ' ' + time.ctime(int(exTime)) + ' ' + link
-    eventList = []
+
+    event_dic = {}
     for id, course, num, exTime, link in itertools.izip(exIdlist, exCourseList, exNumList, exTimeList, exLinklist):
-        eventList.append([id, course, num, exTime, link])
+        evnt = event.Event(id, course, num, exTime, link)
+        event_dic[id] = evnt
 
-    return eventList
-
-def get_new_event_list():
-    soup = export_htm_robobrowser.export_html()
-    return parse_event_page(soup)
-
-
-def filter_events(eventList):
-    ids = open('./id.history', 'rb').read().split('\n')
-    filteredEvents = []
-    exist = 0
-    for event in eventList:
-        for oldId in ids:
-            if event[0] == oldId:
-                exist = 1
-                break
-        if exist == 0:
-            filteredEvents.append(event)
-        exist = 0
-
-    return filteredEvents
-
-def backup_events(filteredEvents):
-    for event in filteredEvents:
-        with open("id.history", "a") as myfile:
-            myfile.write(event[0]+'\n')
-
-
-def filter_backup(eventList):
-    filteredList = filter_events(get_new_event_list())
-    backup_events(filter_events(filteredList))
-    return filteredList
-
-
-def main():
-    eventList = get_new_event_list()
-    print eventList
-
-if __name__ == '__main__':
-    main()
+    return event_dic

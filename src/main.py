@@ -1,42 +1,29 @@
-from google_calender import add_event
-from parse_htm import get_new_event_list
-from parse_htm import filter_backup
-import urllib
-import urllib2
-import pytz
-from datetime import datetime
-from config import Config
-
-tz = pytz.timezone('Asia/Jerusalem')
+from src import export_htm_robobrowser
+from src.filter_events import get_filtered_events, get_non_update_events
+from src.google_calender import add_events_to_calender
+from src.manage_db import load_events_from_db
+from src.parse_htm import parse_event_page
 
 
 def main():
 
-    print '-----Start-----\n' +  datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '\n'
-    eventlist = get_new_event_list()
+    # Get the html of the moodle page
+    html_page = export_htm_robobrowser.export_html()
 
-    filteredlist = filter_backup(eventlist)
+    # Dictionary of the events in moodle right now
+    event_from_moodle_dic = parse_event_page(html_page)
 
-    # event = [id, course, num, exTime, link]
-    for event in filteredlist:
-        print 'Hw ' + event[2] + ' - ' + event[1]+ ' ' + event[4] + ' ' + \
-              datetime.fromtimestamp(int(event[3]), tz).isoformat() + ' ' +\
-              datetime.fromtimestamp(int(event[3]), tz).isoformat()
-        
-        add_event('Hw ' + event[2] + ' - ' + event[1], event[4], datetime.fromtimestamp(int(event[3]), tz).isoformat()
-                  , datetime.fromtimestamp(int(event[3]), tz).isoformat())
+    # Load events from db
+    db_dic = load_events_from_db()
 
-        ######### Send to Telegram Channel ##########
+    # Filter to new and exist events
+    [new_events, exist_events] = get_filtered_events(db_dic, event_from_moodle_dic)
 
-        text = 'New Homework!\n\nHw ' + event[2] + ' - ' + event[1] + '\n\nDue by ' + \
-                   datetime.fromtimestamp(int(event[3]), tz).strftime('%d.%m.%Y %H:%M')+ '\n\n' + event[4]
+    # Filter update needed events
+    non_update_events = get_non_update_events(db_dic, exist_events)
 
-        url = 'https://api.telegram.org/{0}/sendMessage' \
-              '?chat_id={1}&text={2}'.format(Config.TELEGRAM_TOKEN, Config.GOOGLE_CALENDER_ID, urllib.quote_plus(text))
-
-        contents = urllib2.urlopen(url).read()
-
-    print '------End------\n'
+    # Add new events to google calender
+    add_events_to_calender(new_events)
 
 
 if __name__ == '__main__':

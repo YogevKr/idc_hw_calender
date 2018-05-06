@@ -9,3 +9,6 @@ class Event:
 
     def set_end_time(self, new_end_time):
         self.end_time = new_end_time
+
+    def __cmp__(self, other):
+        return self.__dict__ == other.__dict__

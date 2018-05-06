@@ -54,7 +54,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def add_event(summary, description, start, end):
+def add_event(summary, description, start, end, event_id):
 
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
@@ -63,6 +63,7 @@ def add_event(summary, description, start, end):
     event = {
         'summary': summary,
         'description': description,
+        'eventId': event_id,
         'start': {
             'dateTime': start,
             'timeZone': 'Asia/Jerusalem',
@@ -83,3 +84,16 @@ def add_event(summary, description, start, end):
 
     print
     'Event created: %s' % (event.get('htmlLink'))
+
+
+def add_event_from_event_object(event):
+
+    title = 'Hw {0} - {1}'.format(event.ex_number, event.course)
+    ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
+
+    add_event(title, event.link, ex_time_iso_format, ex_time_iso_format, event.id)
+
+
+def add_events_to_calender(events):
+    for key, value in events.iteritems():
+        add_event_from_event_object(value)
