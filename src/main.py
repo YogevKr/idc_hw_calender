@@ -1,9 +1,9 @@
-from src import export_htm_robobrowser, manage_db, google_calender
-from src.filter_events import get_filtered_events, get_non_update_events
-from src.google_calender import add_events_to_calender
-from src.manage_db import load_events_from_db, dump_events_to_db, update_events
-from src.parse_htm import parse_event_page
-from src.telegram import send_messages_for_new_hws, send_messages_for_update_hws
+import export_htm_robobrowser, manage_db, google_calender
+from filter_events import get_filtered_events, get_non_update_events
+from google_calender import add_events_to_calender
+from manage_db import load_events_from_db, dump_events_to_db, update_events
+from parse_htm import parse_event_page
+from telegram import send_messages_for_new_hws, send_messages_for_update_hws
 
 
 def main():
