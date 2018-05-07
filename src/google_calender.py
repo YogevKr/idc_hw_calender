@@ -125,6 +125,7 @@ def add_event_from_event_object(event):
     google_id = add_event(title, event.link, ex_time_iso_format, ex_time_iso_format, event.id)
 
     event.google_id = google_id
+    print(title)
 
 
 def add_events_to_calender(events):
