@@ -8,10 +8,10 @@ tz = pytz.timezone('Asia/Jerusalem')
 
 
 def send_message_for_new_hw(event):
-    ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
+    ex_time = datetime.fromtimestamp(int(event.end_time), tz).strftime('%d.%m.%Y %H:%M')
 
     text = 'New Homework!\n\nHw {0} - {1}\n\nDue by {2}\n\n{3}'\
-        .format(event.ex_number, event.course, ex_time_iso_format, event.link)
+        .format(event.ex_number, event.course, ex_time, event.link)
 
     url = 'https://api.telegram.org/{0}/sendMessage' \
           '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
@@ -26,10 +26,10 @@ def send_messages_for_new_hws(events):
 
 
 def send_message_for_update_hw(event):
-    ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
+    ex_time = datetime.fromtimestamp(int(event.end_time), tz).strftime('%d.%m.%Y %H:%M')
 
     text = 'Extension of the due date!\n\nHw {0} - {1}\n\nDue by {2}\n\n{3}' \
-        .format(event.ex_number, event.course, ex_time_iso_format, event.link)
+        .format(event.ex_number, event.course, ex_time, event.link)
 
     url = 'https://api.telegram.org/{0}/sendMessage' \
           '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
