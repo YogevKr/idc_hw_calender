@@ -15,6 +15,8 @@ def parse_event_page(soup):
     for item in exNumList1:
         if item is not None:
             exNumList.append(item.group())
+        else:
+            exNumList.append("")
 
 
     #exNumList = [re.search("\d", row.find('a').contents[0]).group() for row in
