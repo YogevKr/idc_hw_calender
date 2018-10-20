@@ -10,7 +10,7 @@ tz = pytz.timezone('Asia/Jerusalem')
 def send_message_for_new_hw(event):
     ex_time = datetime.fromtimestamp(int(event.end_time), tz).strftime('%d.%m.%Y %H:%M')
 
-    text = 'New Homework!\n\nHw {0} - {1}\n\nDue by {2}\n\n{3}'\
+    text = 'New Homework!\n\n{0} - {1}\n\nDue by {2}\n\n{3}'\
         .format(event.ex_number, event.course, ex_time, event.link)
 
     url = 'https://api.telegram.org/{0}/sendMessage' \

@@ -1,10 +1,10 @@
 from robobrowser import RoboBrowser
-from bs4 import BeautifulSoup
 import time
 import datetime
 from config import Config
 
-def export_html():
+
+def export_html(url=None):
 
     date = str(int(time.time()))
     browser = RoboBrowser()
@@ -21,7 +21,12 @@ def export_html():
     form['password'].value = Config.MOODLE_PASSWORD
     browser.submit_form(form)
 
-    browser.open('http://moodle.idc.ac.il/{0}/calendar'
-                 '/view.php?time={1}&lang=en'.format(current_year, date))
+    if url is None:
+        browser.open('http://moodle.idc.ac.il/2019/calendar/view.php?time={1}&lang=en'.format(current_year, date))
+        browser.open('http://moodle.idc.ac.il/2019/calendar/view.php?time={1}&lang=en'.format(current_year, date))
+    else:
+        browser.open(url)
+        browser.open(url)
+
     return browser.parsed
 
