@@ -43,4 +43,11 @@ def send_messages_for_update_hws(events):
         send_message_for_update_hw(value)
 
 
+def send_message(text):
+    url = 'https://api.telegram.org/{0}/sendMessage' \
+          '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
+                                         config.Config.TELEGRAM_CHAT_ID, urllib.quote_plus(text))
+
+    urllib2.urlopen(url).read()
+
 

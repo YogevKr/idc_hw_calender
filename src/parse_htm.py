@@ -1,6 +1,6 @@
 import re
 import event
-from src.export_htm_robobrowser import export_html
+from src import export_html
 from datetime import datetime
 from time import mktime
 
