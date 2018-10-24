@@ -21,8 +21,20 @@ def parse_event_page(soup):
         course_name = html.find_all('h1')[0].text
         ex_name = html.find_all('h2')[0].text
 
-        due_time_str = html.find_all('td', attrs={"class": "cell c1 lastcol"})[1].text
-        due_time = datetime.strptime(due_time_str, '%A, %d %B %Y, %I:%M %p')
+        potential_dates_tags = html.find_all('td', attrs={"class": "cell c1 lastcol"})
+
+        due_time = None
+
+        for tag in potential_dates_tags:
+            try:
+                due_time = datetime.strptime(tag.text, '%A, %d %B %Y, %I:%M %p')
+                break
+            except ValueError:
+                pass
+
+        if not due_time:
+            raise Exception
+
         time_stamp = mktime(datetime.timetuple(due_time))
 
         event_dic[ex_id] = event.Event(ex_id, course_name, ex_name, time_stamp, link)
