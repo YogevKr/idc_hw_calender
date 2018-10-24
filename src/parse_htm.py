@@ -1,8 +1,10 @@
 import re
 import event
-from src import export_html
+
 from datetime import datetime
 from time import mktime
+
+from export_htm_robobrowser import export_html
 
 
 def parse_event_page(soup):
