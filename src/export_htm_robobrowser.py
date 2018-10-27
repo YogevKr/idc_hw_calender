@@ -25,8 +25,7 @@ def export_html(url=None):
         browser.open('http://moodle.idc.ac.il/2019/calendar/view.php?time={1}&lang=en'.format(current_year, date))
         browser.open('http://moodle.idc.ac.il/2019/calendar/view.php?time={1}&lang=en'.format(current_year, date))
     else:
-        browser.open(url)
-        browser.open(url)
+        browser.open(url+'&action&lang=en')
 
     return browser.parsed
 
