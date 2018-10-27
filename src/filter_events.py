@@ -2,7 +2,7 @@ def get_filtered_events(db, events):
     new_events = {}
     exists_events = {}
 
-    for key, value in events.iteritems():
+    for key, value in events.items():
 
         if key not in db:
             new_events[key] = value
@@ -16,7 +16,7 @@ def get_filtered_events(db, events):
 def get_non_update_events(db, events):
     non_update_events = {}
 
-    for key, value in events.iteritems():
+    for key, value in events.items():
 
         if key in db:
             if db[key] == value:

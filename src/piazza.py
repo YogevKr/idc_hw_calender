@@ -1,10 +1,12 @@
-from config import Config
-from bs4 import BeautifulSoup
-import re
 import ast
+import re
 
-from src.piazza_api.piazza import Piazza
+from bs4 import BeautifulSoup
+from piazza_api import Piazza
+
+from config import Config
 from src.telegram import send_message
+
 
 
 def piazza():
@@ -17,7 +19,7 @@ def piazza():
         'Advanced Algorithms': {'url': 'https://piazza.com/idc.ac.il/fall2018/3501/resources', 'id': 'jn8vp29d21f2mt'},
         'Automata': {'url': 'https://piazza.com/idc_-_hertzelia/fall2018/1910643/resources', 'id': 'jn8u1w3q1ji2io'}}
 
-    for name, course_data in courses.iteritems():
+    for name, course_data in courses.items():
         r = p.session.get(course_data['url'])
         soup = BeautifulSoup(r.text, 'html.parser')
         data = soup.find_all("script")

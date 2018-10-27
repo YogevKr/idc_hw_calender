@@ -1,8 +1,9 @@
 import urllib
-import urllib2
 from datetime import datetime
 import pytz
 import config
+from urllib.request import urlopen
+from urllib.parse import quote_plus
 
 tz = pytz.timezone('Asia/Jerusalem')
 
@@ -15,13 +16,13 @@ def send_message_for_new_hw(event):
 
     url = 'https://api.telegram.org/{0}/sendMessage' \
           '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
-                                         config.Config.TELEGRAM_CHAT_ID, urllib.quote_plus(text))
+                                         config.Config.TELEGRAM_CHAT_ID, quote_plus(text))
 
-    urllib2.urlopen(url).read()
+    urlopen(url).read()
 
 
 def send_messages_for_new_hws(events):
-    for key, value in events.iteritems():
+    for key, value in events.items():
         send_message_for_new_hw(value)
 
 
@@ -33,13 +34,13 @@ def send_message_for_update_hw(event):
 
     url = 'https://api.telegram.org/{0}/sendMessage' \
           '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
-                                         config.Config.TELEGRAM_CHAT_ID, urllib.quote_plus(text))
+                                         config.Config.TELEGRAM_CHAT_ID, quote_plus(text))
 
-    urllib2.urlopen(url).read()
+    urlopen(url).read()
 
 
 def send_messages_for_update_hws(events):
-    for key, value in events.iteritems():
+    for key, value in events.items():
         send_message_for_update_hw(value)
 
 
@@ -48,6 +49,6 @@ def send_message(text):
           '?chat_id={1}&text={2}'.format(config.Config.TELEGRAM_TOKEN,
                                          config.Config.TELEGRAM_CHAT_ID, urllib.quote_plus(text))
 
-    urllib2.urlopen(url).read()
+    urlopen(url).read()
 
 

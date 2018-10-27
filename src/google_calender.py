@@ -2,7 +2,7 @@ from __future__ import print_function
 import httplib2
 import os
 
-from apiclient import discovery
+from googleapiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
@@ -128,10 +128,10 @@ def add_event_from_event_object(event):
 
 
 def add_events_to_calender(events):
-    for key, value in events.iteritems():
+    for key, value in events.items():
         add_event_from_event_object(value)
 
 
 def update_events(events):
-    for key, value in events.iteritems():
+    for key, value in events.items():
         update_event(value)
