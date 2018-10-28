@@ -4,6 +4,7 @@ from filter_events import get_filtered_events, get_non_update_events
 from google_calender import add_events_to_calender
 from manage_db import load_events_from_db, dump_events_to_db
 from parse_htm import parse_event_page
+from piazza import get_new_piazza_events
 from telegram import send_messages_for_new_hws, send_messages_for_update_hws
 import sentry_sdk
 
@@ -39,6 +40,8 @@ def main():
     # Write all events to database
     manage_db.update_events(non_update_events)
     dump_events_to_db(new_events)
+
+    get_new_piazza_events()
 
 
 if __name__ == '__main__':

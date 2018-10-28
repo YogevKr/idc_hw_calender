@@ -8,7 +8,6 @@ from jsondb.db import Database
 
 from config import Config
 from event import Event
-from google_calender import add_events_to_calender
 from src.telegram import send_message
 
 
@@ -53,6 +52,12 @@ def get_new_piazza_events():
                 new_resources_ids.append(r_id)
                 new_resources_events[r_id] = Event(r_id, name, resources_details[r_id]['subject'],
                                                    resources_details[r_id]['date'], file_url)
+
+                text = '{} uploaded to Piazza - {}.\n Due date {}\n {}'.format(resources_details[r_id]['subject'], name,
+                                                                               resources_details[r_id]['date'],
+                                                                               file_url)
+                send_message(text)
+
                 db[key] = resources_details[r_id]
 
     return new_resources_events, new_resources_ids
@@ -64,5 +69,4 @@ def get_new_piazza_events():
 
 
 if __name__ == '__main__':
-    new_resources_events, new_resources_ids = get_new_piazza_events()
-    add_events_to_calender(new_resources_events)
+    get_new_piazza_events()
