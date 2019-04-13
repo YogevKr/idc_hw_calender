@@ -116,10 +116,9 @@ def update_event(event_obj):
     #     return
 
 
-
 def add_event_from_event_object(event):
 
-    title = 'Hw {0} - {1}'.format(event.ex_number, event.course)
+    title = '{0} - {1}'.format(event.ex_number, event.course)
     ex_time_iso_format = datetime.fromtimestamp(int(event.end_time), tz).isoformat()
 
     google_id = add_event(title, event.link, ex_time_iso_format, ex_time_iso_format, event.id)

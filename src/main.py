@@ -1,12 +1,15 @@
+import config
 import export_htm_robobrowser, manage_db, google_calender
 from filter_events import get_filtered_events, get_non_update_events
 from google_calender import add_events_to_calender
-from manage_db import load_events_from_db, dump_events_to_db, update_events
+from manage_db import load_events_from_db, dump_events_to_db
 from parse_htm import parse_event_page
 from telegram import send_messages_for_new_hws, send_messages_for_update_hws
+import sentry_sdk
 
 
 def main():
+    sentry_sdk.init(config.Config.SENTRY)
 
     # Get the html of the moodle page
     html_page = export_htm_robobrowser.export_html()
